@@ -1,15 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { IPagination } from '../shared/models/pagination';
+
+import { IProduct } from '../shared/models/product';
+import { ShopService } from './shop.service';
 
 @Component({
-  selector: 'app-shop',
-  templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss']
+    selector: 'app-shop',
+    templateUrl: './shop.component.html',
+    styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
+    products: IProduct[];
 
-  constructor() { }
+    constructor(private shopService: ShopService) {}
 
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void {
+        this.shopService.getProducts().subscribe(
+            (response) => {
+                this.products = response.data;
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    }
 }
