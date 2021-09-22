@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IPagination } from '../shared/models/pagination';
+import { IBrand } from '../shared/models/brand';
 
 import { IProduct } from '../shared/models/product';
+import { IProductType } from '../shared/models/productType';
 import { ShopService } from './shop.service';
 
 @Component({
@@ -11,11 +12,21 @@ import { ShopService } from './shop.service';
 })
 export class ShopComponent implements OnInit {
     products: IProduct[];
+    brands: IBrand[];
+    types: IProductType[];
+    brandIdSelected: number = 0;
+    typeIdSelected: number = 0;
 
     constructor(private shopService: ShopService) {}
 
     ngOnInit(): void {
-        this.shopService.getProducts().subscribe(
+        this.getProducts();
+        this.getBrands();
+        this.getTypes();
+    }
+
+    getProducts() {
+        this.shopService.getProducts(this.brandIdSelected, this.typeIdSelected).subscribe(
             (response) => {
                 this.products = response.data;
             },
@@ -23,5 +34,27 @@ export class ShopComponent implements OnInit {
                 console.log(error);
             },
         );
+    }
+
+    getBrands() {
+        this.shopService.getBrands().subscribe((response) => {
+            this.brands = [{ id: 0, name: 'All' }, ...response];
+        });
+    }
+
+    getTypes() {
+        this.shopService.getTypes().subscribe((response) => {
+            this.types = [{ id: 0, name: 'All' }, ...response];
+        });
+    }
+
+    onBrandSelected(brandId: number) {
+        this.brandIdSelected = brandId;
+        this.getProducts();
+    }
+
+    onTypeSelectd(typeId: number) {
+        this.typeIdSelected = typeId;
+        this.getProducts();
     }
 }
