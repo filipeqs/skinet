@@ -1,26 +1,19 @@
 <form class="form-signin mt-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
 
-    <div class="form-floating">
-        <input
-            type="email"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-            formControlName="email"
-        />
-        <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-        <input
-            formControlName="password"
-            type="password"
-            class="form-control"
-            id="floatingPassword"
-            placeholder="Password"
-        />
-        <label for="floatingPassword">Password</label>
-    </div>
+    <app-text-input formControlName="email" [label]="'Email Address'"></app-text-input>
+    <app-text-input
+        formControlName="password"
+        [label]="'Password'"
+        [type]="'password'"
+    ></app-text-input>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+    <p>Form Status: {{ loginForm.status }}</p>
+    <p>Email Status: {{ loginForm.get('email').status }}</p>
+    <p>Email Touched: {{ loginForm.get('email').touched }}</p>
+    <p>Email Dirty: {{ loginForm.get('email').dirty }}</p>
+    <pre>{{ loginForm.value | json }}</pre>
 </form>
