@@ -1,5 +1,6 @@
-<div class="container mt-5">
-    <div class="row" *ngIf="orders">
+<div class="container mt-5" *ngIf="orders">
+    <div class="row" *ngIf="orders.length == 0">No orders</div>
+    <div class="row" *ngIf="orders.length > 0">
         <div class="col-12">
             <div>
                 <div class="table-responsive">
@@ -21,7 +22,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let order of orders">
+                            <tr
+                                *ngFor="let order of orders"
+                                routerLink="/orders/{{ order.id }}"
+                                style="cursor: pointer"
+                            >
                                 <th>
                                     <strong># {{ order.id }}</strong>
                                 </th>

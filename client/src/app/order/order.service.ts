@@ -14,4 +14,8 @@ export class OrderService {
     getOrders() {
         return this.http.get<IOrder[]>(this.baseUrl + 'orders');
     }
+
+    getOrderById(id: number) {
+        return this.http.get<IOrder>(this.baseUrl + 'orders/' + id);
+    }
 }
