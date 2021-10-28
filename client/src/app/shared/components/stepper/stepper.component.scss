@@ -1,4 +1,5 @@
 button.nav-link {
+    font-weight: bold;
     background: #e9ecef;
     border-radius: 0;
     border: none;
@@ -17,5 +18,9 @@ button.nav-link {
 
     &.active:focus {
         outline: none;
+    }
+
+    &:disabled:not(.active) {
+        color: #333;
     }
 }
