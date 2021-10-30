@@ -29,11 +29,11 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(options =>
             {
-                options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddDbContext<AppIdentityDbContext>(options =>
             {
-                options.UseSqlite(_configuration.GetConnectionString("IdentityConnection"));
+                options.UseNpgsql(_configuration.GetConnectionString("IdentityConnection"));
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c => 
